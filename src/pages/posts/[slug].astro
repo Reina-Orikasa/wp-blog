@@ -1,0 +1,58 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "@astrojs/image/components";
+
+const { slug } = Astro.params;
+
+let res = await fetch(
+  `https://imabarijet.com/wp-json/wp/v2/posts/?slug=${slug}`
+);
+let [post] = await res.json();
+
+interface Post {
+  slug: string;
+  post: string;
+}
+
+export async function getStaticPaths() {
+  let data = await fetch("https://imabarijet.com/wp-json/wp/v2/posts/");
+  let posts = await data.json();
+
+  return posts.map((post: Post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+---
+
+<Layout title={post.title.rendered}>
+  <div class="flex justify-center z-0 relative">
+    <Image
+      src={post.jetpack_featured_media_url}
+      alt="header"
+      width={2560}
+      height={1928}
+      format="jpg"
+      class="header"
+    />
+  </div>
+
+  <div
+    class="text-center rounded-xl -mt-12 mb-8 bg-slate-700 text-white md:mx-48 z-50 p-4 relative"
+  >
+    <h1 set:html={post.title.rendered} class="text-5xl my-4 font-bold" />
+    <h2 set:html={post.excerpt.rendered} class="text-xl font-semibold" />
+    <p class="text-lg font-light">{post.date.split("T")[0]}</p>
+  </div>
+
+  <article class="mx-6 md:mx-48 text-lg py-8 space-y-4">
+    <Fragment set:html={post.content.rendered} />
+  </article>
+</Layout>
+
+<style>
+  .wp-element-caption {
+    margin-top: 4rem;
+    text-align: center;
+  }
+</style>
