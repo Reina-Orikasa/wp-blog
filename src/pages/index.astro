@@ -17,39 +17,49 @@ interface Post {
 }
 ---
 
-<div class="text-center">
-  <Navigation />
-  <div class="grid md:grid-cols-3 gap-4 mx-14 mt-4">
-    {
-      posts.map((post: Post) => (
-        <div
-          id={post.id.toString()}
-          class="border-2 border-black pb-4 rounded-b-lg hover:bg-slate-700 hover:text-white transition ease-in-out delay-150"
-        >
-          <div class="flex justify-center">
-            <Image
-              src={post.jetpack_featured_media_url}
-              width={2560}
-              height={1928}
-              alt=""
-              class=" pb-4"
-              format="jpg"
-            />
-          </div>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Adventures of a JET in Imabari">
+    <title>Imabari JET Adventures</title>
+  </head>
+  <body>
+    <div class="text-center">
+      <Navigation />
+      <div class="grid md:grid-cols-3 gap-4 mx-14 mt-4">
+        {
+          posts.map((post: Post) => (
+            <div
+              id={post.id.toString()}
+              class="border-2 border-black pb-4 rounded-b-lg hover:bg-slate-700 hover:text-white transition ease-in-out delay-150"
+            >
+              <div class="flex justify-center">
+                <Image
+                  src={post.jetpack_featured_media_url}
+                  width={2560}
+                  height={1928}
+                  alt=""
+                  class=" pb-4"
+                  format="jpg"
+                />
+              </div>
 
-          <div class="px-8">
-            <h2 class="text-2xl mt-4 mb-8">
-              <a
-                href={`/posts/${post.slug}`}
-                set:html={post.title.rendered}
-                class="hover:underline font-bold"
-              />
-            </h2>
-            <p set:html={post.excerpt.rendered} />
-            <p class="font-light mt-12">{post.date.split("T")[0]}</p>
-          </div>
-        </div>
-      ))
-    }
-  </div>
-</div>
+              <div class="px-8">
+                <h2 class="text-2xl mt-4 mb-8">
+                  <a
+                    href={`/posts/${post.slug}`}
+                    set:html={post.title.rendered}
+                    class="hover:underline font-bold"
+                  />
+                </h2>
+                <p set:html={post.excerpt.rendered} />
+                <p class="font-light mt-12">{post.date.split("T")[0]}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </body>
+</html>
