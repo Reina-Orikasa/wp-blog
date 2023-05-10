@@ -37,8 +37,8 @@ interface Post {
               <div class="flex justify-center">
                 <Image
                   src={post.jetpack_featured_media_url}
-                  width={2560}
-                  height={1928}
+                  width={800}
+                  height={Math.round((1928 / 2560) * 800)}
                   alt=""
                   class=" pb-4"
                   format="jpg"
